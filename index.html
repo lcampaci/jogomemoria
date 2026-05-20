@@ -234,6 +234,22 @@
     }
 
     startGame();
+
+     window.addEventListener("resize", fixViewport);
+window.addEventListener("orientationchange", fixViewport);
+fixViewport();
+
+
+    if ("serviceWorker" in navigator) {
+            window.addEventListener("load", () => {
+                navigator.serviceWorker.register("./service-worker.js").then(() => {
+                    console.log("PWA instalada!");
+                }).catch(err => {
+                    console.log("Erro:", err);
+
+                });
+            });
+        }
   </script>
 
 </body>
