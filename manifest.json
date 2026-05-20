@@ -1,6 +1,6 @@
 {
   "name": "Jogo da Memória",
-  "short_name": "Jogo da Memória",
+  "short_name": "Memória",
   "start_url": "./",
   "display": "standalone",
   "background_color": "#0f172a",
