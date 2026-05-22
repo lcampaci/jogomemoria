@@ -162,41 +162,55 @@
       return card;
     }
 
-    function flipCard() {
-      if (lockBoard) return;
-      if (this === firstCard) return;
+   function flipCard() {
+  if (lockBoard) return;
+  if (this === firstCard) return;
 
-      this.classList.add('flip');
+  // vibra ao tocar na carta
+  vibrar(30);
 
-      if (!firstCard) {
-        firstCard = this;
-        return;
-      }
+  this.classList.add('flip');
 
-      secondCard = this;
-      vibrar();
-      checkMatch();
-    }
+  if (!firstCard) {
+    firstCard = this;
+    return;
+  }
+
+  secondCard = this;
+
+  checkMatch();
+}
 
     function checkMatch() {
-      const isMatch =
-        firstCard.dataset.emoji === secondCard.dataset.emoji;
+  const isMatch =
+    firstCard.dataset.emoji === secondCard.dataset.emoji;
 
-      if (isMatch) {
-        disableCards();
-        score++;
-        scoreElement.textContent = score;
+  if (isMatch) {
 
-        if (score === emojis.length) {
-          setTimeout(() => {
-            alert('🎉 Você venceu!');
-          }, 500);
-        }
+    // vibração de sucesso
+    vibrar([80, 40, 120]);
 
-      } else {
-        unflipCards();
-      }
+    disableCards();
+
+    score++;
+    scoreElement.textContent = score;
+
+    if (score === emojis.length) {
+      setTimeout(() => {
+        vibrar([200, 100, 200, 100, 300]);
+        alert('🎉 Você venceu!');
+      }, 500);
     }
+
+  } else {
+
+    // vibração de erro
+    vibrar([200]);
+
+    unflipCards();
+  }
+}
+
 
     function disableCards() {
       firstCard.removeEventListener('click', flipCard);
@@ -209,11 +223,14 @@
       VIBRAÇÃO
      ========================= */
 
-function vibrar(tempo = 40){
+function vibrar(tempo = 40) {
 
-  if(navigator.vibrate){
-    navigator.vibrate(tempo);
+  // alguns navegadores precisam disso
+  if (!("vibrate" in navigator)) {
+    return;
   }
+
+  navigator.vibrate(tempo);
 }
 
     function unflipCards() {
