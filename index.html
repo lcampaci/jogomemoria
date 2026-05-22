@@ -205,6 +205,17 @@
       resetBoard();
     }
 
+  /* =========================
+      VIBRAÇÃO
+     ========================= */
+
+function vibrar(tempo = 40){
+
+  if(navigator.vibrate){
+    navigator.vibrate(tempo);
+  }
+}
+
     function unflipCards() {
       lockBoard = true;
 
