@@ -182,6 +182,7 @@
 }
 
     function checkMatch() {
+
   const isMatch =
     firstCard.dataset.emoji === secondCard.dataset.emoji;
 
@@ -195,10 +196,49 @@
     score++;
     scoreElement.textContent = score;
 
+    // venceu o jogo
     if (score === emojis.length) {
+
       setTimeout(() => {
-        vibrar([200, 100, 200, 100, 300]);
-        alert('🎉 Você venceu!');
+
+        // vibração forte de vitória
+        vibrar([300, 100, 300, 100, 500]);
+
+        // mensagem visual
+        alert("🎉 PARABÉNS! VOCÊ VENCEU! 🏆");
+
+        // pedir nome
+        let nome = prompt("Digite seu nome:");
+
+        if (!nome || nome.trim() === "") {
+          nome = "Jogador";
+        }
+
+        // data e hora
+        const agora = new Date();
+
+        const resultado = {
+          nome: nome,
+          pontos: score,
+          data: agora.toLocaleDateString("pt-BR"),
+          hora: agora.toLocaleTimeString("pt-BR")
+        };
+
+        // pegar histórico
+        let ranking =
+          JSON.parse(localStorage.getItem("rankingMemoria")) || [];
+
+        // adicionar novo resultado
+        ranking.push(resultado);
+
+        // salvar
+        localStorage.setItem(
+          "rankingMemoria",
+          JSON.stringify(ranking)
+        );
+
+        console.log("Ranking salvo:", ranking);
+
       }, 500);
     }
 
